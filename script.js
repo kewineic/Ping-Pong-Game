@@ -4,8 +4,8 @@ var pincel = tela.getContext('2d')
 var eixoXbolinha = 300;
 var eixoYbolinha = 200;
 var diametro = 22;
-var regra = 1;
-var direcao = 1;
+var velocidadeX = 2;
+var velocidadeY = 2;
 
 function limpaTela(){
     pincel.clearRect(0, 0, 600, 400);
@@ -21,25 +21,19 @@ function draw(x, y, diam){
 }
 
 function atualizaTela(){
-    if(eixoXbolinha<23){
-        regra++;
-    }else if(eixoXbolinha>577){
-       regra--;
+    if( eixoXbolinha > (tela.width - diametro) || eixoXbolinha < diametro ){
+        velocidadeX*=-1
+    }
+    
+    if( eixoYbolinha > (tela.height - diametro) || eixoYbolinha < diametro ){
+        velocidadeY*=-1
     }
 
-    eixoXbolinha+=regra
-
-    if(eixoYbolinha>377){
-        direcao--
-    }else if(eixoYbolinha<23){
-        direcao++
-    }
-
-    eixoYbolinha+=direcao
-
+    eixoXbolinha+=velocidadeX
+    eixoYbolinha+=velocidadeY
     limpaTela()
     draw(eixoXbolinha, eixoYbolinha, diametro)
     console.log(eixoXbolinha)
 }
 
-setInterval(atualizaTela, 0.1);
+setInterval(atualizaTela, .1);

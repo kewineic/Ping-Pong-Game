@@ -25,6 +25,9 @@ var taxaTeclado = 20;
 var meusPontos = 0;
 var rivalPontos = 0;
 
+var raquetadaSom = () => { new Audio("./raquetada.mp3").play()}
+var pontuacaoSom = () => { new Audio("./ponto.mp3").play()}
+
 function limpaTela() {
     pincel.clearRect(0, 0, 600, 400);
 }
@@ -46,6 +49,7 @@ function verificaColisaoBolaVsRaquete() {
         (eixoYbolinha - diametro) < (eixoYraquete + 100)
     ) {
         velocidadeX *= -1;
+        raquetadaSom()
     }
 
 }
@@ -57,6 +61,7 @@ function verificaColisaoBolaVsRaqueteRival() {
         (eixoYbolinha + diametro) < (eixoYraqueteRival + 100)
     ) {
         velocidadeX *= -1;
+        raquetadaSom()
     }
 
 }
@@ -64,8 +69,10 @@ function verificaColisaoBolaVsRaqueteRival() {
 function verificaPontuacao() {
     if (eixoXbolinha < diametro) {
         rivalPontos++;
+        pontuacaoSom()
     } else if (eixoXbolinha > (tela.width - diametro)) {
         meusPontos++;
+        pontuacaoSom()
     }
 }
 
@@ -135,4 +142,5 @@ function atualizaTela() {
 }
 
 document.onkeydown = movimentoTeclado;
+
 setInterval(atualizaTela, .1);

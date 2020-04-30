@@ -1,11 +1,11 @@
 
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
-var eixoXbolinha = 300;
-var eixoYbolinha = 200;
 var diametro = 22;
 var raio = diametro / 2;
 
+var eixoXbolinha = 300;
+var eixoYbolinha = 200;
 var velocidadeX = 2;
 var velocidadeY = 2;
 
@@ -15,7 +15,8 @@ var eixoYraquete = 150;
 var eixoXraqueteRival = 585;
 var eixoYraqueteRival = 150;
 
-var velocidadeYrival = 2;
+var velocidadeYrival = 10;
+var chanceDeAcerto = 50;
 
 var teclaCima = 38;
 var teclaBaixo = 40;
@@ -57,8 +58,8 @@ function verificaColisaoBolaVsRaquete() {
 function verificaColisaoBolaVsRaqueteRival() {
     if (
         (eixoXbolinha + diametro) > (eixoXraqueteRival) &&
-        (eixoYbolinha + diametro) > (eixoYraqueteRival - 50) &&
-        (eixoYbolinha + diametro) < (eixoYraqueteRival + 100)
+        (eixoYbolinha + diametro) > (eixoYraqueteRival) &&
+        (eixoYbolinha + diametro) < (eixoYraqueteRival + 150)
     ) {
         velocidadeX *= -1;
         raquetadaSom()
@@ -109,7 +110,19 @@ function movimentoTeclado(evento) {
 }
 
 function movimentoRival() {
-    eixoYraqueteRival = eixoYbolinha - 50;
+    eixoYraqueteRival = eixoYbolinha - chanceDeAcerto; 
+}
+
+function alteraChanceDeAcertar(){
+    if(eixoXbolinha > 500){
+        if(chanceDeAcerto < -40){
+            velocidadeYrival*= -1
+        }else if(chanceDeAcerto > 140){
+            velocidadeYrival*= -1
+        }
+        chanceDeAcerto+=velocidadeYrival
+        console.log(chanceDeAcerto)
+    }
 }
 
 function mostraPontuacao(){
@@ -138,9 +151,10 @@ function atualizaTela() {
     mostraPontuacao();
     direcaoBolinha();
     desenhaBolinha(eixoXbolinha, eixoYbolinha, diametro);
-    console.log(rivalPontos);
+    
+    console.log(eixoXbolinha, eixoYraquete)
 }
 
 document.onkeydown = movimentoTeclado;
-
-setInterval(atualizaTela, .1);
+setInterval(alteraChanceDeAcertar, 200);
+setInterval(atualizaTela, 1);

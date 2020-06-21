@@ -26,8 +26,8 @@ var taxaTeclado = 20;
 var meusPontos = 0;
 var rivalPontos = 0;
 
-var raquetadaSom = () => { new Audio("./raquetada.mp3").play()}
-var pontuacaoSom = () => { new Audio("./ponto.mp3").play()}
+var raquetadaSom = () => { new Audio("./media/raquetada.mp3").play()}
+var pontuacaoSom = () => { new Audio("./media/ponto.mp3").play()}
 
 function limpaTela() {
     pincel.clearRect(0, 0, 600, 400);
@@ -151,8 +151,6 @@ function atualizaTela() {
     mostraPontuacao();
     direcaoBolinha();
     desenhaBolinha(eixoXbolinha, eixoYbolinha, diametro);
-    
-    console.log(eixoXbolinha, eixoYraquete)
 }
 
 document.onkeydown = movimentoTeclado;
